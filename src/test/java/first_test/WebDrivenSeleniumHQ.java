@@ -1,5 +1,6 @@
 package first_test;
 
+import jdk.internal.icu.text.UnicodeSet;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -29,8 +30,14 @@ public class WebDrivenSeleniumHQ {
         List<WebElement> searchBtn = driver.findElements(By.xpath("//*[@id='menu-wrapper']/div/div/div/div/button/div"));
         searchBtn.get(0).click(); //risky point here
 
-        Assert.assertTrue(searchResults.size()"");
-        Thread.sleep(2000);
+        new WebDriverWait(driver,10)
+                .until(ExpectedConditions
+                        .presenceOfElementLocated(By.xpath("//div[contains(@class,'vue-widget') and contains (., 'зимняя') and contains (.,'куртка')]")));
+
+        List<WebElement> searchResults = driver.findElements(By.xpath("//div[contains(@class,'vue-widget') and contains (., 'зимняя') and contains (.,'куртка')]"));
+        System.out.println("Search results number for requested term: " + searchResults.size());
+
+        Assert.assertTrue(searchResults.size()>0);
         driver.quit();
 
     }
